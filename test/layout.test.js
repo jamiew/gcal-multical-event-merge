@@ -5,16 +5,16 @@ import { chip, day, loadPage, monthWeek, moreLink, tops, weekAllDay } from "./he
 const PINK = "rgb(216, 27, 96)"
 
 test("month view: merged duplicates leave no empty rows", () => {
-    // Like Wed Nov 4 in the bug report: two pairs of duplicates from two calendars.
+    // Two pairs of duplicates from two calendars, like the bug report.
     const { document, get } = loadPage(
         monthWeek([
             day([
-                chip({ id: "bday", title: "Birthday", top: 0 }),
-                chip({ id: "cooler-a", title: "Watercooler", top: 1 }),
-                chip({ id: "cooler-b", title: "Watercooler", color: PINK, top: 2 }),
-                chip({ id: "retro-a", title: "Retro", top: 3 }),
-                chip({ id: "retro-b", title: "Retro", color: PINK, top: 4 }),
-                chip({ id: "sync", title: "Dev sync", top: 5 }),
+                chip({ id: "holiday", title: "Holiday", top: 0 }),
+                chip({ id: "standup-a", title: "Standup", top: 1 }),
+                chip({ id: "standup-b", title: "Standup", color: PINK, top: 2 }),
+                chip({ id: "review-a", title: "Review", top: 3 }),
+                chip({ id: "review-b", title: "Review", color: PINK, top: 4 }),
+                chip({ id: "planning", title: "Planning", top: 5 }),
                 moreLink({ count: 2, top: 6 })
             ])
         ])
@@ -22,12 +22,12 @@ test("month view: merged duplicates leave no empty rows", () => {
     get("merge")(document.querySelector('[role="main"]'))
 
     assert.deepEqual(tops(document, 0), {
-        bday: "0em",
-        "cooler-a": "1em",
-        "cooler-b": "1em", // hidden, under the merged event
-        "retro-a": "2em",
-        "retro-b": "2em",
-        sync: "3em",
+        holiday: "0em",
+        "standup-a": "1em",
+        "standup-b": "1em", // hidden, under the merged event
+        "review-a": "2em",
+        "review-b": "2em",
+        planning: "3em",
         more: "4em"
     })
 })
